@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AddButton } from "./Form.styled";
-import { useCreateContactsMutation } from "../../contactsSlice";
+import { useCreateContactsMutation, useFetchContactsQuery } from "../../contactsSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,6 +9,7 @@ function Form() {
   const [number, setNumber] = useState("");
 
   const [createContact] = useCreateContactsMutation();
+  const { data: contacts} = useFetchContactsQuery();
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -22,25 +23,24 @@ function Form() {
         return;
     }
   };
-
+  
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    // if (contacts.find(contact => contact.name === name)) {
-    //   toast(`Contact ${name} is already exists`);
-    //   setName("");
-    //   setNumber("");
-    //   return;
-    // }
+
+    if (contacts.find(contact => contact.name === name)) {
+      toast(`Contact ${name} is already exists`);
+      setName("");
+      setNumber("");
+      return;
+    }
+    
     createContact(name, number);
     setName("");
     setNumber("");  
   };
   
-
   return (
-    <form onSubmit={onHandleSubmit}
-      // contacts={contacts}
-    >
+    <form onSubmit={onHandleSubmit}>
       <label>
         name
         <input

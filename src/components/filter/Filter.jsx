@@ -8,10 +8,14 @@ const Filter = () => {
   const value = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
 
+  const onChange = (e) => {
+    dispatch(actions.filterContact(e.target.value));
+  }
+
   return (
     <div>
       <FilterTitle>Find contacts by name</FilterTitle>
-      <input type="text" value={value} onChange={(e)=> dispatch(actions.filterContact(e.target.value))}></input>
+      <input type="text" value={value} onChange={onChange}></input>
     </div>
   );
 };
