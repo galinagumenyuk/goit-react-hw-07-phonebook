@@ -1,7 +1,9 @@
 import React from "react";
 import { ContactItem, DeleteButton, Contact } from "./Contacts.styled";
 import { useSelector } from "react-redux";
-import { useFetchContactsQuery, useDeleteContactsMutation} from "../../contactsSlice";
+import { useFetchContactsQuery, useDeleteContactsMutation } from "../../contactsSlice";
+import { SpinnerDiamond} from 'spinners-react';
+
 
 const Contacts = () => {
 
@@ -22,7 +24,7 @@ const Contacts = () => {
   
   return (
     <>
-      {isFetching && <p>Loading...</p>}
+      {isFetching && <SpinnerDiamond size="300" secondaryColor='#ffffff' color=" #A2D9CE" speed='80'/>}
       {contacts && <ContactItem>
       {contactsFilter.map((contact) => (
         <Contact key={contact.id}>
